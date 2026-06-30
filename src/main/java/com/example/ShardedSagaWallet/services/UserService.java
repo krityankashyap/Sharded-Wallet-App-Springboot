@@ -16,8 +16,11 @@ public class UserService {
   private final UserRepository userRepository;
  
    public User createUser(User user) {
-    log.info("Creating user: {}", user);
-    return userRepository.save(user);
+    log.info("Creating user: {}", user.getEmail());
+    User newUser= userRepository.save(user);
+    log.info("User created with ID {} in database shaedwallet{}", newUser.getId(), (newUser.getId()%2 + 1));
+
+    return newUser;
   }
 
 }

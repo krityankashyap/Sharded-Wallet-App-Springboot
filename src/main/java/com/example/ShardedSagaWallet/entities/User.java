@@ -23,10 +23,10 @@ public class User {
    
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  public Long id;
 
-  private String name;
+  public String name;
 
-  private String email;
+  public String email;
 
 }
