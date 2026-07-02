@@ -1,6 +1,9 @@
 package com.example.ShardedSagaWallet.entities;
 
-import groovy.transform.builder.Builder;
+
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,13 +29,14 @@ public class SagaInstance {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private String sagaId;
+  private Long sagaId;
   
   @Enumerated(EnumType.STRING)
   @Column(name= "status", nullable = false)
   private SagaStatus status= SagaStatus.STARTED;
   
-  @Column(name= "saga_context", columnDefinition="TEXT", nullable = false)
+  @JdbcTypeCode(SqlTypes.JSON)
+  @Column(name= "saga_context", columnDefinition="json")
   private String sagaContext;
   
   @Column(name= "curr_step", nullable = false)
