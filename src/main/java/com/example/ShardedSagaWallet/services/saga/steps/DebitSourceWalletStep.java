@@ -62,7 +62,7 @@ public class DebitSourceWalletStep implements SagaStep {
       throw new RuntimeException("Insufficient balance in source wallet");
     }
 
-    sourceWallet.deductBalance(amount);
+    sourceWallet.creditBalance(amount);
     walletRepository.save(sourceWallet);
 
     log.info("Source wallet compensated successfully. New balance: {}", sourceWallet.getBalance()); // New balance after debiting
