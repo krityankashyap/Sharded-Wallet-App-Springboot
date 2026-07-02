@@ -1,5 +1,8 @@
 package com.example.ShardedSagaWallet.services;
 
+import java.util.List;
+import java.util.Optional;
+
 // Removed invalid import
 import org.springframework.stereotype.Service;
 
@@ -23,4 +26,18 @@ public class UserService {
     return newUser;
   }
 
+  public Optional<User> getUserById(Long id) {
+    log.info("Fetching user with ID: {}", id);
+    return userRepository.findById(id);
+  }
+
+  public List<User> getAllUsers() {
+    log.info("Fetching all users");
+    return userRepository.findAll();
+  }
+  
+  public List<User> getUserByName(String name) {
+    log.info("Fetching users with name: {}", name);
+    return userRepository.findByNameIgnoreCase(name);
+  }
 }
