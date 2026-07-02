@@ -20,7 +20,7 @@ import lombok.*;
 @Setter
 @Builder
 @Table(name = "transactional")
-public class Transactional {
+public class Transaction {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
