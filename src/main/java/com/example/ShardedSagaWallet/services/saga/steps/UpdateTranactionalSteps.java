@@ -41,6 +41,20 @@ public class UpdateTranactionalSteps implements SagaStep {
   @Override
   @Transactional
   public boolean compensateSteps(SagaContext context) {
+    Long transactionalId= context.getLong("transactionalId");
+
+    TransactionalStatus transactionalStatusAfterCompensate = TransactionalStatus.valueOf(context.getString("originalTransactionStatus"));
+
+    log.info("Compensating transactional steps for transactionalId: {}. Reverting status to: {}", transactionalId, transactionalStatusAfterCompensate);
+
+    Transaction transaction= transactionalRepository.findById(transactionalId).orElseThrow(() -> new RuntimeException("Transaction not found"));
+
+    transaction.setStatus(transactionalStatusAfterCompensate);
+    transactionalRepository.save(transaction);
+  
+    log.info("Transactional steps compensated successfully for transactionalId: {}. Reverted status to: {}", transactionalId, transaction.getStatus());
+
+
     return true; // Return true if the compensation executed successfully, false otherwise
   }
 

@@ -44,4 +44,14 @@ public class SagaContext {
       return null;
     }
   }
+
+  public String getString(String key){  // this function is used to get the value of a key as a String, if the value is not a String, it will return null
+    Object value= contextData.get(key);
+
+    if( value instanceof String){
+      return (String) value;
+    } else {
+      return null;
+    }
+  }
 }
