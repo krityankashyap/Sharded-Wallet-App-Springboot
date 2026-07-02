@@ -49,6 +49,7 @@ public class CreditDestinationWalletStep implements SagaStep{
   }
 
   @Override
+  @Transactional
   public boolean compensateSteps(SagaContext context) {  // This method is called if the saga fails and we need to roll back the changes made by this step
     log.info("Compensating CreditDestinationWalletStep for sagaId: {}");
     //  Step1:- Get the destination wallet id from the context
