@@ -37,12 +37,12 @@ public class Transaction {
   
   @Enumerated(EnumType.STRING)
   @Column(name="status", nullable = false)
-  private TransactionalStatus status = TransactionalStatus.PENDING;
+  private TransactionalStatus status;
   
 
   @Enumerated(EnumType.STRING)
   @Column(name="transactional_type", nullable = false)
-  private TransactionalType type= TransactionalType.TRANSFER;
+  private TransactionalType type;
   
 
   @Column(name="discription", nullable = false)

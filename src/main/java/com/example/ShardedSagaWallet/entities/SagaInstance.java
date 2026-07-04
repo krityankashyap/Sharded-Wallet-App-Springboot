@@ -33,7 +33,7 @@ public class SagaInstance {
   
   @Enumerated(EnumType.STRING)
   @Column(name= "status", nullable = false)
-  private SagaStatus status= SagaStatus.STARTED;
+  private SagaStatus status;
   
   @JdbcTypeCode(SqlTypes.JSON)
   @Column(name= "saga_context", columnDefinition="json")

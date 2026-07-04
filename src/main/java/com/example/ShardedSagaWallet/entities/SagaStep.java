@@ -25,7 +25,7 @@ public class SagaStep {
   @Column(name= "step_instance_id", nullable = false)
   private Long saga_instance_id;
   
-  @Column(name= "step_name", nullable = false)
+  @Column(name= "step_name")
   private String stepName;
   
   @Column(name= "status", nullable = true)

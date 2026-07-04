@@ -8,6 +8,7 @@ import com.example.ShardedSagaWallet.entities.TransactionalStatus;
 import com.example.ShardedSagaWallet.repository.TransactionalRepository;
 import com.example.ShardedSagaWallet.services.saga.SagaContext;
 import com.example.ShardedSagaWallet.services.saga.SagaStep;
+import com.example.ShardedSagaWallet.services.saga.steps.SagaStepFactory.SagaStepType;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,13 +44,13 @@ public class UpdateTranactionalSteps implements SagaStep {
   public boolean compensateSteps(SagaContext context) {
     Long transactionalId= context.getLong("transactionalId");
 
-    TransactionalStatus transactionalStatusAfterCompensate = TransactionalStatus.valueOf(context.getString("originalTransactionStatus"));
+    TransactionalStatus transactionalStatusBeforeCompensate = TransactionalStatus.valueOf(context.getString ("originalTransactionStatus")); 
 
-    log.info("Compensating transactional steps for transactionalId: {}. Reverting status to: {}", transactionalId, transactionalStatusAfterCompensate);
+    log.info("Compensating transactional steps for transactionalId: {}", transactionalId);
 
     Transaction transaction= transactionalRepository.findById(transactionalId).orElseThrow(() -> new RuntimeException("Transaction not found"));
 
-    transaction.setStatus(transactionalStatusAfterCompensate);
+    transaction.setStatus(transactionalStatusBeforeCompensate);
     transactionalRepository.save(transaction);
   
     log.info("Transactional steps compensated successfully for transactionalId: {}. Reverted status to: {}", transactionalId, transaction.getStatus());
@@ -60,6 +61,6 @@ public class UpdateTranactionalSteps implements SagaStep {
 
   @Override
   public String getStepName() {
-    return "UpdateTranactionalSteps";
+    return SagaStepType.UPDATE_TRANSACTION_WALLET_STEP.toString();
   }
 }

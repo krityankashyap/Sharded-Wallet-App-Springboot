@@ -9,6 +9,7 @@ import com.example.ShardedSagaWallet.entities.Wallet;
 import com.example.ShardedSagaWallet.repository.WalletRepository;
 import com.example.ShardedSagaWallet.services.saga.SagaContext;
 import com.example.ShardedSagaWallet.services.saga.SagaStep;
+import com.example.ShardedSagaWallet.services.saga.steps.SagaStepFactory.SagaStepType;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -72,6 +73,6 @@ public class DebitSourceWalletStep implements SagaStep {
 
   @Override
   public String getStepName() {
-    return "DebitSourceWalletStep";
+    return SagaStepType.DEBIT_SOURCE_WALLET_STEP.toString();
   }
 }

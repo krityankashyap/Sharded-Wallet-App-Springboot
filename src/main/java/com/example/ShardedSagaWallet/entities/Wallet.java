@@ -34,7 +34,7 @@ public class Wallet {
   private Boolean isActive;
   
   @Column(name= "balance", nullable = false)
-  private BigDecimal balance= BigDecimal.ZERO;
+  private BigDecimal balance;
 
   public boolean hasSufficientBalance(BigDecimal amount) {
     return balance.compareTo(amount) >= 0;
