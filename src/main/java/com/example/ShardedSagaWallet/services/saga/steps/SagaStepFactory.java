@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.example.ShardedSagaWallet.entities.SagaStep;
+import com.example.ShardedSagaWallet.services.saga.SagaStepInterface;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SagaStepFactory {
 
-  private final Map<String, SagaStep> sagaStepMap;
+  private final Map<String, SagaStepInterface> sagaStepMap;
 
 
 
@@ -22,7 +22,7 @@ public class SagaStepFactory {
     UPDATE_TRANSACTION_WALLET_STEP,
   }
   
-  public SagaStep getSagaStep(String stepName) {
+  public SagaStepInterface getSagaStep(String stepName) {
     return sagaStepMap.get(stepName);
   }
 }

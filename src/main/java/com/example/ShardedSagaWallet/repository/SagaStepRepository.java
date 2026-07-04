@@ -7,11 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.ShardedSagaWallet.entities.SagaStep;
+import com.example.ShardedSagaWallet.entities.SagaStepStatus;
 
 @Repository
 public interface SagaStepRepository extends JpaRepository<SagaStep, Long>{
  
   List<SagaStep> findBySagaInstanceId(Long sagaInstanceId);
+
+  List<SagaStep> findBySagaInstanceIdAndStatus(Long sagaInstanceId, SagaStepStatus status);
 
   @Query("SELECT s FROM SagaStep s WHERE s.sagaInstanceId = :sagaInstanceId AND s.status = 'COMPLETED'")
   List<SagaStep> findCompletedStepsBySagaInstanceId(Long sagaInstanceId);

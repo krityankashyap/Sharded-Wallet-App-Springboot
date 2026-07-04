@@ -7,7 +7,7 @@ import com.example.ShardedSagaWallet.entities.Transaction;
 import com.example.ShardedSagaWallet.entities.TransactionalStatus;
 import com.example.ShardedSagaWallet.repository.TransactionalRepository;
 import com.example.ShardedSagaWallet.services.saga.SagaContext;
-import com.example.ShardedSagaWallet.services.saga.SagaStep;
+import com.example.ShardedSagaWallet.services.saga.SagaStepInterface;
 import com.example.ShardedSagaWallet.services.saga.steps.SagaStepFactory.SagaStepType;
 
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UpdateTranactionalSteps implements SagaStep {
+public class UpdateTranactionalSteps implements SagaStepInterface {
   
   private final TransactionalRepository transactionalRepository;
 

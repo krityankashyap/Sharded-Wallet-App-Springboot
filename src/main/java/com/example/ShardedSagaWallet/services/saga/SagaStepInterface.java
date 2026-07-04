@@ -1,6 +1,6 @@
 package com.example.ShardedSagaWallet.services.saga;
 
-public interface SagaStep {
+public interface SagaStepInterface {
  
   boolean executeStep(SagaContext context); 
 
