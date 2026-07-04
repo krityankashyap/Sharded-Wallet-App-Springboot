@@ -1,6 +1,8 @@
 package com.example.ShardedSagaWallet.services.saga;
 
 import com.example.ShardedSagaWallet.repository.SagaInstanceRepository;
+import com.example.ShardedSagaWallet.services.saga.steps.SagaStepFactory;
+import com.example.ShardedSagaWallet.entities.SagaStep;
 import org.springframework.stereotype.Service;
 
 import com.example.ShardedSagaWallet.entities.SagaInstance;
@@ -17,6 +19,7 @@ public class SagaOrchestratorImpl implements SagaOrchestrator {
   
   private final SagaInstanceRepository sagaInstanceRepository;
   private final ObjectMapper objectMapper;
+  private final SagaStepFactory sagaStepFactory;
 
 
 
@@ -46,6 +49,8 @@ public class SagaOrchestratorImpl implements SagaOrchestrator {
     SagaInstance sagaInstance= sagaInstanceRepository.findById(sagaInstanceId).orElseThrow(() -> new RuntimeException("Saga instance not found"));
 
     // Now we have to find the object sagaStep by getting a stepName
+   SagaStep sagaStep= sagaStepFactory.getSagaStep(stepName);
+    return false;
   } 
 
   public boolean compensateStep(Long sagaInstanceId, String stepName){
