@@ -36,5 +36,29 @@ public class SagaStep {
   
   @Column(name= "status", nullable = false)
   private SagaStepStatus status;
+  
 
+  public void markAsCompleted() {
+    this.status = SagaStepStatus.COMPLETED;
+  }
+
+  public void markAsFailed() {
+    this.status = SagaStepStatus.FAILED;
+  }
+
+  public void markAsInRunning() {
+    this.status = SagaStepStatus.RUNNING;
+  }
+
+  public void markAsPending() {
+    this.status = SagaStepStatus.PENDING;
+  }
+
+  public void markAsCompensating() {
+    this.status = SagaStepStatus.COMPENSATING;
+  }
+
+  public void markAsCompensated() {
+    this.status = SagaStepStatus.COMPENSATED;
+  }
 }

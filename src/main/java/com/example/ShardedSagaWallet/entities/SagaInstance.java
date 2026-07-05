@@ -41,4 +41,28 @@ public class SagaInstance {
   
   @Column(name= "curr_step", nullable = false)
   private String currStep;
+
+  public void markAsCompleted() {
+    this.status = SagaStatus.COMPLETED;
+  }
+
+  public void markAsFailed() {
+    this.status = SagaStatus.FAILED;
+  }
+
+  public void markAsInRunning() {
+    this.status = SagaStatus.RUNNING;
+  }
+
+  public void markAsPending() {
+    this.status = SagaStatus.PENDING;
+  }
+
+  public void markAsCompensating() {
+    this.status = SagaStatus.COMPENSATING;
+  }
+
+  public void markAsCompensated() {
+    this.status = SagaStatus.COMPENSATED;
+  }
 }
