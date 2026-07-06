@@ -60,4 +60,11 @@ public List<Transaction> getTransactionsByStatus(TransactionalStatus status){
   return transactionalRepository.findByStatus(status);
 }
 
+public void updateTransactionWithSagaInstanceId(Long transactionId, Long sagaInstanceId){
+Transaction transaction= geTransactionById(transactionId);
+transaction.setSagaInstanceId(sagaInstanceId);
+transactionalRepository.save(transaction);
+log.info("Transaction with id: {} updated with sagaInstanceId: {}", transactionId, sagaInstanceId);
+}
+
 }
