@@ -1,6 +1,7 @@
 package com.example.ShardedSagaWallet.services;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -9,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.ShardedSagaWallet.entities.Transaction;
 import com.example.ShardedSagaWallet.services.saga.SagaContext;
 import com.example.ShardedSagaWallet.services.saga.SagaOrchestrator;
+import com.example.ShardedSagaWallet.services.saga.steps.SagaStepFactory.*;
+
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +54,27 @@ public class TransferSagaService {
   } 
   
   public void executeTransferSaga(Long sagaInstanceId){
+   log.info("Executing transfer saga with sagaInstanceId: {}", sagaInstanceId);
 
+   try {
+    for(SagaStepType sagaStep: SagaStepFactory.TransferSagaSteps){
+
+
+      log.info("Executing saga step: {} for sagaInstanceId: {}", sagaStep, sagaInstanceId);
+      boolean success= sagaOrchestrator.executeStep(sagaInstanceId, sagaStep.toString());
+      
+      if(!success){
+        log.info(null, "Saga step: {} failed for sagaInstanceId: {}", sagaStep, sagaInstanceId);
+        sagaOrchestrator.failSaga(sagaInstanceId);
+      }
+    }
+    log.info("All saga steps executed successfully for sagaInstanceId: {}", sagaInstanceId);
+    sagaOrchestrator.completeSaga(sagaInstanceId);
+
+   } catch (Exception e) {
+    log.error(null, "Exception occurred while executing saga steps for sagaInstanceId: {}", sagaInstanceId, e);
+    sagaOrchestrator.failSaga(sagaInstanceId);
+   }
   }
 
 }

@@ -1,5 +1,6 @@
 package com.example.ShardedSagaWallet.services.saga.steps;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
@@ -21,6 +22,12 @@ public class SagaStepFactory {
     CREDIT_DESTINATION_WALLET_STEP,
     UPDATE_TRANSACTION_WALLET_STEP,
   }
+
+   public final List<SagaStepType> TransferSagaSteps= List.of(
+    SagaStepFactory.SagaStepType.DEBIT_SOURCE_WALLET_STEP,
+    SagaStepFactory.SagaStepType.CREDIT_DESTINATION_WALLET_STEP,
+    SagaStepFactory.SagaStepType.UPDATE_TRANSACTION_WALLET_STEP
+  );
   
   public SagaStepInterface getSagaStep(String stepName) {
     return sagaStepMap.get(stepName);
