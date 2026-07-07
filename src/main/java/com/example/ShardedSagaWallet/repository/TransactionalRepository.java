@@ -17,7 +17,7 @@ public interface TransactionalRepository extends JpaRepository<Transaction , Lon
 
   List<Transaction> findByFromWalletId(Long fromWalletId);
   
-  @Query("SELECT t FROM Transactional t WHERE t.fromWalletId = :walletId OR t.toWalletId = :walletId")
+  @Query("SELECT t FROM Transaction t WHERE t.fromWalletId = :walletId OR t.toWalletId = :walletId")
   List<Transaction> getAllTransactionals(@Param("walletId") Long walletId);
 
   List<Transaction> findBySagaInstanceId(String sagaInstanceId);

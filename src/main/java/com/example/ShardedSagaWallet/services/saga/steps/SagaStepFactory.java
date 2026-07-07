@@ -23,7 +23,7 @@ public class SagaStepFactory {
     UPDATE_TRANSACTION_WALLET_STEP,
   }
 
-   public final List<SagaStepType> TransferSagaSteps= List.of(
+   public static final List<SagaStepType> TransferSagaSteps= List.of(
     SagaStepFactory.SagaStepType.DEBIT_SOURCE_WALLET_STEP,
     SagaStepFactory.SagaStepType.CREDIT_DESTINATION_WALLET_STEP,
     SagaStepFactory.SagaStepType.UPDATE_TRANSACTION_WALLET_STEP

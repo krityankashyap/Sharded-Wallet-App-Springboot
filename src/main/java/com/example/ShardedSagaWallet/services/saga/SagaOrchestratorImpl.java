@@ -14,7 +14,7 @@ import com.example.ShardedSagaWallet.entities.SagaInstance;
 import com.example.ShardedSagaWallet.entities.SagaStatus;
 import com.example.ShardedSagaWallet.entities.SagaStep;
 import com.example.ShardedSagaWallet.entities.SagaStepStatus;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,9 +43,9 @@ public class SagaOrchestratorImpl implements SagaOrchestrator {
 
       sagaInstance= sagaInstanceRepository.save(sagaInstance);
 
-      log.info("Saga instance created with ID: {}", sagaInstance.getSagaId());
+      log.info("Saga instance created with ID: {}", sagaInstance.getId());
 
-      return sagaInstance.getSagaId();
+      return sagaInstance.getId();
 
    } catch (Exception e) {
     log.error("Error starting saga: {}");

@@ -1,7 +1,8 @@
 package com.example.ShardedSagaWallet.services;
 
+import com.example.ShardedSagaWallet.services.saga.steps.SagaStepFactory;
+import com.example.ShardedSagaWallet.services.saga.steps.SagaStepFactory.SagaStepType;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.ShardedSagaWallet.entities.Transaction;
 import com.example.ShardedSagaWallet.services.saga.SagaContext;
 import com.example.ShardedSagaWallet.services.saga.SagaOrchestrator;
-import com.example.ShardedSagaWallet.services.saga.steps.SagaStepFactory.*;
+
 
 
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class TransferSagaService {
-  
+
   private final TransactionService transactionService;
   private final SagaOrchestrator sagaOrchestrator;
+
 
   @Transactional
   public Long initiateTransfer(Long fromWalletId, Long toWalletId, String discription, BigDecimal amount){
@@ -34,7 +36,7 @@ public class TransferSagaService {
     Transaction transaction= transactionService.createTransaction(fromWalletId, toWalletId, amount, discription);
 
     SagaContext sagaContext= SagaContext.builder()
-                             .data(Map.ofEntries(
+                             .contextData(Map.ofEntries(
                                 Map.entry("transactionId", transaction.getId()),
                                 Map.entry("fromWalletId", fromWalletId),
                                 Map.entry("toWalletId", toWalletId),
@@ -64,7 +66,7 @@ public class TransferSagaService {
       boolean success= sagaOrchestrator.executeStep(sagaInstanceId, sagaStep.toString());
       
       if(!success){
-        log.info(null, "Saga step: {} failed for sagaInstanceId: {}", sagaStep, sagaInstanceId);
+        log.info( "Saga step: {} failed for sagaInstanceId: {}", sagaStep, sagaInstanceId);
         sagaOrchestrator.failSaga(sagaInstanceId);
       }
     }
@@ -72,7 +74,7 @@ public class TransferSagaService {
     sagaOrchestrator.completeSaga(sagaInstanceId);
 
    } catch (Exception e) {
-    log.error(null, "Exception occurred while executing saga steps for sagaInstanceId: {}", sagaInstanceId, e);
+    log.error("Exception occurred while executing saga steps for sagaInstanceId: {}", sagaInstanceId, e);
     sagaOrchestrator.failSaga(sagaInstanceId);
    }
   }

@@ -1,11 +1,12 @@
 package com.example.ShardedSagaWallet.entities;
 
-import org.springframework.data.annotation.Id;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -23,17 +24,18 @@ public class SagaStep {
   private Long id;
   
   @Column(name= "step_instance_id", nullable = false)
-  private Long saga_instance_id;
+  private Long sagaInstanceId;
   
   @Column(name= "step_name")
   private String stepName;
   
-  @Column(name= "status", nullable = true)
+  @Column(name= "error_message", nullable = true)
   private String errorMessage;
   
   @Column(name= "step_data", nullable = true)
   private String step_data;
   
+  @Enumerated(EnumType.STRING)
   @Column(name= "status", nullable = false)
   private SagaStepStatus status;
   

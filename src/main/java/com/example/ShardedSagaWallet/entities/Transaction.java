@@ -2,14 +2,13 @@ package com.example.ShardedSagaWallet.entities;
 
 import java.math.BigDecimal;
 
-import org.springframework.data.annotation.Id;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -19,7 +18,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@Table(name = "transactional")
+@Table(name = "transaction")
 public class Transaction {
   
   @Id

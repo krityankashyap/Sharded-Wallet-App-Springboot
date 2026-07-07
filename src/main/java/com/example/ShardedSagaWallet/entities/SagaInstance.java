@@ -29,7 +29,8 @@ public class SagaInstance {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long sagaId;
+  @Column(name = "id")
+  private Long id;
   
   @Enumerated(EnumType.STRING)
   @Column(name= "status", nullable = false)
