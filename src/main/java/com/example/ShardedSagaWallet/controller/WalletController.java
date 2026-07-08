@@ -52,14 +52,14 @@ public class WalletController {
   @PostMapping("/{userId}/debit")
   public ResponseEntity<Wallet> debitWallet(@PathVariable Long userId, @RequestBody DebitWalletDTO debitWalletDTO){
     walletService.debit(userId, debitWalletDTO.getAmount());
-    Wallet wallet = walletService.getWalletById(userId);
+    Wallet wallet = walletService.getWalletByUserId(userId);
     return new ResponseEntity<>(wallet, HttpStatus.OK);
   }
 
   @PostMapping("/{userId}/credit")
   public ResponseEntity<Wallet> creditWallet(@PathVariable Long userId, @RequestBody CreditAmountDTO creditWalletDTO) {
     walletService.credit(userId, creditWalletDTO.getAmount());
-    Wallet wallet = walletService.getWalletById(userId);
+    Wallet wallet = walletService.getWalletByUserId(userId);
     return new ResponseEntity<>(wallet, HttpStatus.OK);
   }
 

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ShardedSagaWallet.entities.Transaction;
 import com.example.ShardedSagaWallet.entities.TransactionalStatus;
+import com.example.ShardedSagaWallet.entities.TransactionalType;
 import com.example.ShardedSagaWallet.repository.TransactionalRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,8 @@ public Transaction createTransaction(Long fromWalletId, Long toWalletId, BigDeci
      .toWalletId(toWalletId)
      .amount(amount)
      .discription(discription)
+     .status(TransactionalStatus.PENDING)
+     .type(TransactionalType.TRANSFER)
      .build();
 
      Transaction savedTransaction= transactionalRepository.save(transaction);

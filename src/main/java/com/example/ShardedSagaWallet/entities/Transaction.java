@@ -35,13 +35,13 @@ public class Transaction {
   private BigDecimal amount;
   
   @Enumerated(EnumType.STRING)
-  @Column(name="status", nullable = false)
-  private TransactionalStatus status;
+  @Column(name="status")
+  private TransactionalStatus status= TransactionalStatus.PENDING;
   
 
   @Enumerated(EnumType.STRING)
-  @Column(name="transactional_type", nullable = false)
-  private TransactionalType type;
+  @Column(name="transactional_type")
+  private TransactionalType type= TransactionalType.TRANSFER;
   
 
   @Column(name="discription", nullable = false)

@@ -38,8 +38,7 @@ public class DebitSourceWalletStep implements SagaStepInterface {
       throw new RuntimeException("Insufficient balance in source wallet");
     }
 
-    sourceWallet.deductBalance(amount);
-    walletRepository.save(sourceWallet);
+    walletRepository.updateBalanceByUserId(fromWalletId, amount);
 
     log.info("Source wallet debited successfully. New balance: {}", sourceWallet.getBalance()); // New balance after debiting
     context.put("fromWalletBalanceAfterDebit", sourceWallet.getBalance()); // store the new balance in the context for reference
@@ -63,8 +62,7 @@ public class DebitSourceWalletStep implements SagaStepInterface {
       throw new RuntimeException("Insufficient balance in source wallet");
     }
 
-    sourceWallet.creditBalance(amount);
-    walletRepository.save(sourceWallet);
+    walletRepository.updateBalanceByUserId(fromWalletId, amount);
 
     log.info("Source wallet compensated successfully. New balance: {}", sourceWallet.getBalance()); // New balance after debiting
     

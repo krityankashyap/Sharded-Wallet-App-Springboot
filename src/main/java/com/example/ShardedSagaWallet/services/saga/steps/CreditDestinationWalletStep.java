@@ -39,8 +39,7 @@ public class CreditDestinationWalletStep implements SagaStepInterface{
 
 
     // Step3:- credit the destination wallet
-    destinationWallet.creditBalance(amount);
-    walletRepository.save(destinationWallet);
+    walletRepository.updateBalanceByUserId(towalletId, amount);
     log.info("Destination wallet credited successfully. New balance: {}", destinationWallet.getBalance()); // New balance after crediting
     context.put("toWalletBalanceAfterCredit", destinationWallet.getBalance()); // store the new balance in the context for reference
 
@@ -65,8 +64,7 @@ public class CreditDestinationWalletStep implements SagaStepInterface{
     log.info("Wallet fetched with balance: {}", destinationWallet.getBalance());
    
     // Step3:- credit the destination wallet
-    destinationWallet.deductBalance(amount);
-    walletRepository.save(destinationWallet);
+    walletRepository.updateBalanceByUserId(towalletId, amount);
     log.info("Destination wallet credited successfully. New balance: {}", destinationWallet.getBalance()); // New balance after crediting
     context.put("toWalletBalanceAfterCredit", destinationWallet.getBalance()); // store the new balance in the context for reference
 
