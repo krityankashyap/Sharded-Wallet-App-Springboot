@@ -23,6 +23,7 @@ public class WalletService {
     Wallet wallet= Wallet.builder()
       .userId(userId)
       .balance(BigDecimal.ZERO)
+      .isActive(true)
       .build();
 
       Wallet savedWallet= walletRepository.save(wallet);
@@ -31,7 +32,7 @@ public class WalletService {
   }
 
   public Wallet getWalletById(Long id){
-    return walletRepository.findById(id).orElseThrow(()-> new RuntimeException("Wallet not found with id: " + id));
+    return walletRepository.findById(id).orElseThrow(() -> new RuntimeException("Wallet not found with id: " + id));
   }
 
   public List<Wallet> getWalletByUserId(Long userId){
