@@ -30,33 +30,35 @@ public class WalletService {
 
       return savedWallet;
   }
-
   public Wallet getWalletById(Long id){
     return walletRepository.findById(id).orElseThrow(() -> new RuntimeException("Wallet not found with id: " + id));
   }
 
-  public List<Wallet> getWalletByUserId(Long userId){
-    return walletRepository.findByUserId(userId);
+  public Wallet getWalletByUserId(Long userId){
+    List<Wallet> wallets = walletRepository.findByUserId(userId);
+    if (wallets.isEmpty()) {
+        throw new RuntimeException("No wallet found for userId: " + userId);
+    }
+    return wallets.get(0);
   }
   
   @Transactional
-  public void debit(Long WalletId, BigDecimal amount){
-    log.info("Debiting amount: {} from walletId: {}", amount, WalletId);
-    Wallet wallet= getWalletById(WalletId);
+  public void debit(Long userId, BigDecimal amount){
+    log.info("Debiting amount: {} from walletId: {}", amount, userId);
+    Wallet wallet= getWalletByUserId(userId);
 
-    wallet.deductBalance(amount);
-    walletRepository.save(wallet);
-    log.info("Debited amount: {} from walletId: {}", amount, WalletId);
+    walletRepository.updateBalanceByUserId(userId, wallet.getBalance().subtract(amount));
+
+    log.info("Debited amount: {} from walletId: {}", amount, userId);
   }
 
   @Transactional
-  public void credit(Long WalletId, BigDecimal amount){
-    log.info("Crediting amount: {} to walletId: {}", amount, WalletId);
-    Wallet wallet= getWalletById(WalletId);
+  public void credit(Long userId, BigDecimal amount){
+    log.info("Crediting amount: {} to walletId: {}", amount, userId);
+    Wallet wallet= getWalletByUserId(userId);
 
-    wallet.creditBalance(amount);
-    walletRepository.save(wallet);
-    log.info("Credited amount: {} to walletId: {}", amount, WalletId);
+   walletRepository.updateBalanceByUserId(userId, wallet.getBalance().add(amount));
+    log.info("Credited amount: {} to walletId: {}", amount, userId);
   }
 
   public BigDecimal getWalletBalance(Long walletId){

@@ -30,8 +30,8 @@ rules:
       actualDataNodes: shardwallet$->{1..2}.wallet
       databaseStrategy:
         standard:
-          shardingColumn: id
-          shardingAlgorithmName: database_inline
+          shardingColumn: user_id
+          shardingAlgorithmName: db-inline-user-id
       keyGenerateStrategy:
         column: id
         keyGeneratorName: snowflake    
@@ -76,6 +76,12 @@ rules:
       type: INLINE
       props:
         algorithm-expression: shardwallet$->{id % 2 + 1}
+
+    db-inline-user-id:
+      type: INLINE
+      props:
+        algorithm-expression: shardwallet$->{user_id % 2 + 1}
+
 
   keyGenerators:
     snowflake:
